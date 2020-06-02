@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #define N 8 // 8x8 matrix
-#define MATRIX_SIZE N*N
+#define MATRIX_SIZE N *N
 #define BLOCKSIZE 4 // blocking into 4 4x4 matrices
 
 // M1 and M2 initalized in main
@@ -63,6 +63,8 @@ void matrix_multiply(int *A, int *B, int *C)
 
 int main()
 {
+    // see unoptimized.c for read_matrix()
+    // if you don't want predefined arrays
     // defined in .data
     int M1[MATRIX_SIZE] =
         {1, 2, 1, 1, 0, 0, 1, 2,
