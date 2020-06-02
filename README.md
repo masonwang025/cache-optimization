@@ -34,3 +34,7 @@ void matrix_multiply(int *A, int *B, int *C)
                 do_block(si, sj, sk, A, B, C);
 }
 ```
+
+## Unoptimized C Code
+
+`unoptimized.c` contains an implementation of GEMM with the intuitive two-dimensional matrices. Better performance can be achieved with one-dimensional matrices by exploiting subword parallelism.
