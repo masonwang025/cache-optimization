@@ -1,5 +1,5 @@
 // C program to multiply two square matrices
-// Note: program is long to mirror the MIPS program
+// Note: program may not be extremely concise but is meant to mirror the MIPS program
 
 #include <stdio.h>
 #include <stdlib.h>
