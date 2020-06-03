@@ -50,6 +50,7 @@ void do_block(int si, int sj, int sk, int *A, int *B, int *C)
             for (int k = sk; k < sk + BLOCKSIZE; k++)
                 cij += A[(i * N) + k] * B[(k * N) + j]; /* cij+=A[i][k]*B[k][j] */
             C[(i * N) + j] = cij;                       /* C[i][j] = cij */
+            // this code block can be shortened by removing the usage of cij
         }
 }
 

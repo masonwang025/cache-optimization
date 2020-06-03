@@ -7,7 +7,7 @@ The optimized version operates of 4x4 submatrices to increase hit rate.
 ## Optimized C Code
 
 Altered from page 415 of _Hennesy and Patterson Computer Organization and Design_.
-The book's example is optimized DGEMM, with incorrect indexing. The code below (found in `optimized.c`) is GEMM with fixed indexing.
+The book's example is optimized DGEMM, with inconsistent indexing compared to the previous examples. The code below (found in `optimized.c`) is GEMM with fixed indexing.
 
 ```
 #define N 8 // 8x8 matrix
