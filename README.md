@@ -34,6 +34,7 @@ void matrix_multiply(int *A, int *B, int *C)
                 do_block(si, sj, sk, A, B, C);
 }
 ```
+Other ways to optimize code include exploiting subword parallelism and loop unrolling.
 
 ## Optimized MIPS Code
 
