@@ -27,6 +27,14 @@ start:
 	# print output
 	la $a0, product
 	jal print_matrix
+
+	# print sum
+	la $a0, product
+	jal sum_matrix # sum will be in $v0
+	move $a0, $v0 # a0 contains the sum
+	li $v0, 1 
+	syscall
+	
 	
 	# exit
 	li $v0, 10
@@ -35,43 +43,43 @@ start:
 
 # a1 * a2 -> a0
 matrix_multiply:
-	move $t2, $a0 # product
-	move $t3, $a1 # M1
-	move $t4, $a2 # M2
+	move $s3, $a0 # product
+	move $s4, $a1 # M1
+	move $s5, $a2 # M2
 	
-	li $t1, 4 # $t1 = 4 (row size/loop end)
 	li $s0, 0 # i = 0; initialize 1st for loop
 	L1: li $s1, 0 # j = 0; restart 2nd for loop
 		L2: li $s2, 0 # k = 0; restart 3rd for loop
-		sll $t2, $s0, 2 # $t2 = i * 4 (size of row of c)
-		addu $t2, $t2, $s1 # $t2 = i * size(row) + j
-		sll $t2, $t2, 2 # $t2 = byte offset of [i][j]
-		addu $t2, $a0, $t2 # $t2 = byte address of c[i][j]
-		lw $t4, 0($t2) # $t4 = 8 bytes of c[i][j]
-		L3: sll $t0, $s2, 2 # $t0 = k * 4 (size of row of b)
-			addu $t0, $t0, $s1 # $t0 = k * size(row) + j
-			sll $t0, $t0, 2 # $t0 = byte offset of [k][j]
-			addu $t0, $a2, $t0 # $t0 = byte address of b[k][j]
-			lw $t5, 0($t0) # $t5 = 8 bytes of b[k][j]
-			sll $t0, $s0, 2 # $t0 = i * 4 (size of row of a)
-			addu $t0, $t0, $s2 # $t0 = i * size(row) + k
-			sll $t0, $t0, 2 # $t0 = byte offset of [i][k]
-			addu $t0, $a1, $t0 # $t0 = byte address of a[i][k]
-			lw $t6, 0($t0) # $t6 = 8 bytes of a[i][k]
-			mul $t5, $t6, $t5 # $t5 = a[i][k] * b[k][j]
-			add $t4, $t4, $t5 # t4 = c[i][j] + a[i][k] * b[k][j]
-			addiu $s2, $s2, 1 # $k = k + 1
-			bne $s2, $t1, L3 # if (k != 4) go to L3
-			sw $t4, 0($t2) # c[i][j] = $t4
-			addiu $s1, $s1, 1 # $j = j + 1
-			bne $s1, $t1, L2 # if (j != 4) go to L2
-			addiu $s0, $s0, 1 # $i = i + 1
-			bne $s0, $t1, L1 # if (i != 4) go to L1
+		sll $s3, $s0, 2 # $s3 = i * 4 (size of row of c)
+		addu $s3, $s3, $s1 # $s3 = i * size(row) + j
+		sll $s3, $s3, 2 # $s3 = byte offset of [i][j]
+		addu $s3, $a0, $s3 # $s3 = byte address of c[i][j]
+		lw $s5, 0($s3) # $s5 = 8 bytes of c[i][j]
+		L3: # inner loop
+            sll $t0, $s2, 2 # $t0 = k * 4 (size of row of b)
+            addu $t0, $t0, $s1 # $t0 = k * size(row) + j
+            sll $t0, $t0, 2 # $t0 = byte offset of [k][j]
+            addu $t0, $a2, $t0 # $t0 = byte address of b[k][j]
+            lw $t5, 0($t0) # $t5 = 8 bytes of b[k][j]
+            sll $t0, $s0, 2 # $t0 = i * 4 (size of row of a)
+            addu $t0, $t0, $s2 # $t0 = i * size(row) + k
+            sll $t0, $t0, 2 # $t0 = byte offset of [i][k]
+            addu $t0, $s4, $t0 # $t0 = byte address of a[i][k]
+            lw $t6, 0($t0) # $t6 = 8 bytes of a[i][k]
+            mul $t5, $t6, $t5 # $t5 = a[i][k] * b[k][j]
+            add $s5, $s5, $t5 # s5 = c[i][j] + a[i][k] * b[k][j]
+            addiu $s2, $s2, 1 # $k = k + 1
+            bne $s2, 4, L3 # if (k != 4) go to L3
+            sw $s5, 0($s3) # c[i][j] = $s5
+            addiu $s1, $s1, 1 # $j = j + 1
+            bne $s1, 4, L2 # if (j != 4) go to L2
+            addiu $s0, $s0, 1 # $i = i + 1
+            bne $s0, 4, L1 # if (i != 4) go to L1
 	jr $ra
 
 
-	# procedure that reads a 4x4 matrix into $a0
-	read_matrix:
+# procedure that reads a 4x4 matrix into $a0
+read_matrix:
 	li $s0, 0 # index
 	move $s1, $a0 # matrix to read
 	matrix_read_loop:
@@ -184,12 +192,6 @@ print_vector:
 		addi $t0, $t0, 1 # index++
 		bne $t0, $a1, vector_print_loop # loop if index has not reached bound
 	jr $ra
-	
-# is $a0 odd? return 1(true) if odd, 0 if even
-is_odd:
-	andi $v0, $a0, 1 # logical and with 1
-	# if even, $v0 will be 0, otheriwse it will be 1
-	jr $ra
 
 # converts string $a0 (length $a1) to integer array and stores it in $a2
 convertASCII:	
@@ -241,6 +243,7 @@ print_row_prompt:
 	syscall
 	
 	jr $ra
+
 
 .data
 M1: .space 64 # 4x4 integer matrix
