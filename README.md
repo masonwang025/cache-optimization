@@ -1,13 +1,13 @@
 # Cache-Optimization
 
-Improving cache hit rate on MIPS GEMM (general matrix multiply) using blocking.
+Improving cache hit rate on MIPS GeMM (general matrix multiply) using blocking.
 
 The optimized version operates of 4x4 submatrices to increase hit rate.
 
 ## Optimized C Code
 
 Altered from page 415 of _Hennesy and Patterson Computer Organization and Design_.
-The book's example is optimized DGEMM, with inconsistent indexing compared to the previous examples. The code below (found in `optimized.c`) is GEMM with fixed indexing.
+The book's example is optimized DGeMM, with inconsistent indexing compared to the previous examples. The code below (found in `optimized.c`) is GeMM with fixed indexing.
 
 ```
 #define N 8 // 8x8 matrix
@@ -43,7 +43,7 @@ See `8x8_optimized.asm`. **The comments in each 8x8 program discuss the performa
 
 ## Unoptimized C Code
 
-`unoptimized.c` contains an implementation of GEMM with the intuitive two-dimensional matrices. Better performance can be achieved with one-dimensional matrices by exploiting subword parallelism.
+`unoptimized.c` contains an implementation of GeMM with the intuitive two-dimensional matrices. Better performance can be achieved with one-dimensional matrices by exploiting subword parallelism.
 
 ## Run the Programs
 
