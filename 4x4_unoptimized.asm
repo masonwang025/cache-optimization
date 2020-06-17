@@ -1,4 +1,3 @@
-# Mason Wang CS10 Lab 4
 .text
 start:
 	# READ INPUT

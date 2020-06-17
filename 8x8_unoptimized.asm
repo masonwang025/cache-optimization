@@ -1,9 +1,18 @@
+##################################
+# After playing around, 83% is the best hit rate:
+###
+# Cache parameters: 
+# Cache size of 256 bytes
+# 8 blocks of 8 words each (64 words total) 
+###
+# Direct mapped -----> 79% hit rate
+# 2-way associative -> 83% hit rate
+# 4% increase in hit rate, 83% highest hit rate for cache size of 256 bytes
+###
+# 83% tied with 2-way set associative for 4 blocks of 16 words each
+##################################
 .text
 start:
-    # DEFINED INPUT
-    la $a0, M1 # matrix 1
-    la $a0, M2 # matrix 2
-    
     # matrix multiply
     la $a2, M2
     la $a1, M1

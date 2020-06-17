@@ -35,6 +35,15 @@ void matrix_multiply(int *A, int *B, int *C)
 }
 ```
 
+## Optimized MIPS Code
+
+The MIPS code was written to reflect the C code above as closely as possible.
+See `8x8_optimized.asm`. **The comments in each 8x8 program discuss the performance using the MIPS Cache Simulator**.
+
 ## Unoptimized C Code
 
 `unoptimized.c` contains an implementation of GEMM with the intuitive two-dimensional matrices. Better performance can be achieved with one-dimensional matrices by exploiting subword parallelism.
+
+## Run the Programs
+
+The assembly programs can be run with the Mars MIPS Simulator. To simulate cache, go to *Tools >> Data Cache Simulator*.
