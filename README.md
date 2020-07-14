@@ -1,4 +1,4 @@
-# Cache-Optimization
+# cache-optimization
 
 Improving cache hit rate on MIPS GeMM (general matrix multiply) using blocking.
 
