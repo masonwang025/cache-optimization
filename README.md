@@ -9,7 +9,7 @@ The optimized version operates of 4x4 submatrices to increase hit rate.
 Altered from page 415 of _Hennesy and Patterson Computer Organization and Design_.
 The book's example is optimized DGeMM, with inconsistent indexing compared to the previous examples. The code below (found in `optimized.c`) is GeMM with <b>fixed indexing</b>.
 
-```
+```c
 #define N 8 // 8x8 matrix
 #define MATRIX_SIZE N*N
 #define BLOCKSIZE 4 // blocking into 4 4x4 matrices
