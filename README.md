@@ -43,7 +43,7 @@ See `8x8_optimized.asm`. **The comments in each 8x8 program discuss the performa
 
 ## Unoptimized C Code
 
-`unoptimized.c` contains an implementation of GeMM with the intuitive two-dimensional matrices. Better performance can be achieved with one-dimensional matrices by exploiting subword parallelism.
+`unoptimized.c` contains an implementation of GeMM with the intuitive loops through the two-dimensional matrices. Better performance can be achieved with one-dimensional matrices by exploiting subword parallelism.
 
 ## Run the Programs
 
